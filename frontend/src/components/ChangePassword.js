@@ -11,11 +11,12 @@ const ChangePassword = () => {
     const { token } = useParams();
     const [newPassword, setNewPassword] = useState('');
     const [oldPassword, setOldPassword] = useState('');
+    const [email, setEmail] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-        await API.post('/change-password', { token, newPassword, oldPassword });
+        await API.post('/change-password', { token, newPassword, oldPassword, email });
         toast.success('Password reset successful!');
         } catch (err) {
         toast.error(err.response?.data?.message || 'Error resetting password');
@@ -24,6 +25,13 @@ const ChangePassword = () => {
 
     return (
         <form onSubmit={handleSubmit}>
+        <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+        />
         <input
             type="password"
             placeholder="Old Password"
